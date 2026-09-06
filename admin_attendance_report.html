@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Attendance Report - All Students</h2>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5>Student Attendance Summary</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Late</th>
+                        <th>Attendance Rate</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in report_data %}
+                    <tr>
+                        <td>{{ data.student.username }}</td>
+                        <td><span class="badge bg-success">{{ data.present }}</span></td>
+                        <td><span class="badge bg-danger">{{ data.absent }}</span></td>
+                        <td><span class="badge bg-warning">{{ data.late }}</span></td>
+                        <td><strong>{{ data.percentage }}%</strong></td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: {{ data.percentage }}%">
+                                    {{ data.percentage }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

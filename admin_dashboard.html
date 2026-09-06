@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+<p>Welcome to the administration panel!</p>
+
+<!-- Stats Cards -->
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h5>Total Students</h5>
+                <h2 class="display-4">{{ total_students }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h5>Total Modules</h5>
+                <h2 class="display-4">{{ total_modules }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h5>Quiz Attempts</h5>
+                <h2 class="display-4">{{ total_attempts }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+                <h5>Pending Leaves</h5>
+                <h2 class="display-4">{{ pending_leaves }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Today's Attendance -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Today's Attendance Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="alert alert-success">
+                            <h4>{{ present_today }}</h4>
+                            <p>Present</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-danger">
+                            <h4>{{ absent_today }}</h4>
+                            <p>Absent</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-warning">
+                            <h4>{{ present_today + absent_today }}</h4>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="/admin/attendance" class="btn btn-primary w-100">Manage Attendance</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Performers -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Top Performing Students</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Average Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in top_performers %}
+                            <tr>
+                                <td>{{ student.username }}</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: {{ student.avg_score }}%">
+                                            {{ student.avg_score|round(1) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">No data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Management Actions -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Module Management</h5>
+            </div>
+            <div class="card-body">
+                <a href="/add-module" class="btn btn-primary w-100 mb-2">➕ Add New Module</a>
+                <button class="btn btn-info w-100" onclick="location.reload()">🔄 Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">Attendance Management</h5>
+            </div>
+            <div class="card-body">
+                <a href="/admin/attendance" class="btn btn-warning w-100 mb-2">📋 Mark Attendance</a>
+                <a href="/admin/attendance-report" class="btn btn-info w-100">📊 Attendance Report</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Leave Management</h5>
+            </div>
+            <div class="card-body">
+                <a href="/admin/leaves" class="btn btn-danger w-100">
+                    📝 Manage Leaves ({{ pending_leaves }} pending)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student List -->
+<div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">Registered Students</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Registered On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.username }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.created_at.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ module.module_name }} - Quiz</h2>
+<p>Answer all questions to complete this module.</p>
+
+<form method="POST">
+    {% for quiz in quizzes %}
+    <div class="card mb-3">
+        <div class="card-header bg-light">
+            <strong>Question {{ loop.index }}:</strong> {{ quiz.question }}
+        </div>
+        <div class="card-body">
+            <div class="form-check mb-2">
+                <input type="radio" name="question_{{ quiz.id }}" value="A" class="form-check-input" required>
+                <label class="form-check-label">A. {{ quiz.option_a }}</label>
+            </div>
+            <div class="form-check mb-2">
+                <input type="radio" name="question_{{ quiz.id }}" value="B" class="form-check-input">
+                <label class="form-check-label">B. {{ quiz.option_b }}</label>
+            </div>
+            <div class="form-check mb-2">
+                <input type="radio" name="question_{{ quiz.id }}" value="C" class="form-check-input">
+                <label class="form-check-label">C. {{ quiz.option_c }}</label>
+            </div>
+            <div class="form-check mb-2">
+                <input type="radio" name="question_{{ quiz.id }}" value="D" class="form-check-input">
+                <label class="form-check-label">D. {{ quiz.option_d }}</label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-success btn-lg">Submit Quiz</button>
+        <a href="/modules" class="btn btn-secondary btn-lg">Cancel</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-fingerprint"></i> Mark Today's Attendance</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-calendar"></i> Today's Date:</strong>
+                    {{ now.strftime('%B %d, %Y') if now else date.today().strftime('%B %d, %Y') }}
+                </div>
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Attendance Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" value="Present" required>
+                            <label class="form-check-label">✅ Present</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" value="Late">
+                            <label class="form-check-label">⏰ Late (with valid reason)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" value="Absent">
+                            <label class="form-check-label">❌ Absent</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Remarks (Optional)</label>
+                        <textarea name="remarks" class="form-control" rows="2"
+                                  placeholder="Add any remarks about your attendance..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-save"></i> Submit Attendance
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Attendance History</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body text-center">
+                <h5>Present Days</h5>
+                <h2 class="display-4">{{ total_present }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body text-center">
+                <h5>Absent Days</h5>
+                <h2 class="display-4">{{ total_absent }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body text-center">
+                <h5>Late Days</h5>
+                <h2 class="display-4">{{ total_late }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body text-center">
+                <h5>Attendance Rate</h5>
+                <h2 class="display-4">{{ attendance_rate }}%</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5>Attendance Records</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Check In Time</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attendance in attendances %}
+                    <tr>
+                        <td>{{ attendance.date.strftime('%B %d, %Y') }}</td>
+                        <td>
+                            {% if attendance.status == 'Present' %}
+                                <span class="badge bg-success">✅ Present</span>
+                            {% elif attendance.status == 'Absent' %}
+                                <span class="badge bg-danger">❌ Absent</span>
+                            {% else %}
+                                <span class="badge bg-warning">⏰ Late</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ attendance.check_in_time.strftime('%I:%M %p') if attendance.check_in_time else '-' }}</td>
+                        <td>{{ attendance.remarks or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No attendance records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

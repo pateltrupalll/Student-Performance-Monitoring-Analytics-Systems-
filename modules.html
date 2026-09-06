@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Available Learning Modules</h2>
+<p>Select a module to start learning and take quiz.</p>
+
+<div class="row mt-4">
+    {% for module in modules %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">{{ module.module_name }}</h5>
+            </div>
+            <div class="card-body">
+                <p>{{ module.description }}</p>
+                <p>
+                    <span class="badge bg-info">Difficulty: {{ module.difficulty }}</span>
+                    <span class="badge bg-secondary">Duration: {{ module.duration_minutes }} min</span>
+                </p>
+
+                {% if module.id in completed_ids %}
+                    <div class="alert alert-success">
+                        ✅ Completed
+                    </div>
+                {% else %}
+                    <a href="/take-quiz/{{ module.id }}" class="btn btn-primary">Start Quiz</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="alert alert-info">No modules available yet. Contact admin to add modules.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
