@@ -62,13 +62,17 @@ It helps administrators efficiently manage students, modules, attendance, quizze
 6. Project Demo
 Add your project screenshots or demo video here.
 Example:
+
 1.[Login Page]
+
 <img width="724" height="363" alt="image" src="https://github.com/user-attachments/assets/f666ab88-3305-4347-a982-bc6498575794" />
 
 2.[Student Dashboard]
+
 <img width="724" height="361" alt="image" src="https://github.com/user-attachments/assets/0af2b37a-64ad-400e-b091-1f79dfd416b5" />
 
 3.[Admin Dashboard]
+
 <img width="698" height="327" alt="image" src="https://github.com/user-attachments/assets/ee8d2fba-b3cd-44ae-a419-b443a8c49333" />
 
 
